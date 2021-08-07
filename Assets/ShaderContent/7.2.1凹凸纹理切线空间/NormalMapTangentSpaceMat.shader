@@ -33,7 +33,7 @@ Shader "UNITY SHADER BOOK/Chapter_7/NormalMapInTangentSpace"
             #pragma fragment frag
 
             #include "Lighting.cginc"
-
+        
             fixed4 _Color;
             sampler2D _MainTex;
             float4 _MainTex_ST; //必须使用  纹理名_ST 的方式声明纹理属性  S = scale  t = transform    xy存储的缩放 zw存储的偏移

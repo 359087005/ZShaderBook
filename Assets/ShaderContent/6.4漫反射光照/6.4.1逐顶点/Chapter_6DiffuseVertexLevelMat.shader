@@ -13,7 +13,7 @@ Shader "UNITY SHADER BOOK/Chapter_6/Diffuse Vertex Level"
        Pass
         {
             Tags {"LightMode" = "ForwardBase"}
-        CGPROGRAM
+            CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
 

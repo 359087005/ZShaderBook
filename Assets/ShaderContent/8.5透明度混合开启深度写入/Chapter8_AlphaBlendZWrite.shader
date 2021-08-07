@@ -19,7 +19,7 @@ Shader "UNITY SHADER BOOK/Chapter_8/AlphaBlend ZWrite"
             ZWrite On
             ColorMask 0   //ColorMask RGB   A    0      其他任何RGBA的组合   当为0时  该PASS 不写入任何颜色通道 不会输出任何颜色
         }
-
+		
        Pass
         {
             Tags {"LightMode" = "ForwardBase"}
