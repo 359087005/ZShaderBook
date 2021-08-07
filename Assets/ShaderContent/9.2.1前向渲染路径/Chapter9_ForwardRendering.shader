@@ -1,7 +1,7 @@
 ﻿// Upgrade NOTE: replaced '_LightMatrix0' with 'unity_WorldToLight'
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
 // Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
+//
 Shader "Chapter9/Forward Rendering" {
 	Properties{
 		_Diffuse("Diffuse", Color) = (1, 1, 1, 1)
