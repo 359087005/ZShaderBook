@@ -1,5 +1,5 @@
 ﻿//兰伯特光照公式:diffuse = light颜色* Diffuse 颜色 *saturate(N · L)；        dot(n,l)
-
+  
 //相乘 光乘物体本身的属性 比如环境光乘以物体的albedo  就是我们看到的物体反射的环境光
 //相加 当物体被多个光源照射时   把物体反射这些光源颜色相加 就是最终颜色
 Shader "UNITY SHADER BOOK/Chapter_6/Diffuse Vertex Level"
