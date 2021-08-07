@@ -1,4 +1,4 @@
-﻿
+﻿//我想是是是
 Shader "Chapter9/Forward Rendering" {
 	Properties{
 		_Diffuse("Diffuse", Color) = (1, 1, 1, 1)
