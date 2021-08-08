@@ -26,3 +26,13 @@ Assets/Resources/BillingMode.json
 Assets/Resources/BillingMode.json.meta
 Assets/Scenes/SampleScene.unity
 Assets/Scenes/SampleScene.unity.meta
+Library/
+Temp/
+.idea/
+.vs/
+.vscode/
+Logs/
+obj/
+Assembly-CSharp.csproj
+Assembly-CSharp-Editor.csproj
+UnityShader_Book.sln
