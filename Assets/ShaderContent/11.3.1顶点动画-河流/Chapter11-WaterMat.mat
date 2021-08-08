@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MirrorMat
-  m_Shader: {fileID: 4800000, guid: c75cbf477a8dd8540961e0f7b1ec46c8, type: 3}
+  m_Name: Chapter11-WaterMat
+  m_Shader: {fileID: 4800000, guid: a1997d1e2a18e914a8e114114680719c, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -35,12 +35,16 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DetailTex:
+        m_Texture: {fileID: 2800000, guid: c119938d0b6e741b8976e978bb7f2410, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 8400000, guid: 1ed3bf12560b1004fa4f5415c996d247, type: 2}
+        m_Texture: {fileID: 2800000, guid: 1fdd0982b3b8c4a2cb28e67913204b5b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -60,18 +64,27 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _Frequency: 0.89
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _HorizontalAmount: 8
+    - _Magnitude: 0.75
     - _Metallic: 0
     - _Mode: 0
+    - _Multiplier: 0.8
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _Scroll2X: 0.2
+    - _ScrollX: 0.1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
+    - _Speed: 1
     - _SrcBlend: 1
     - _UVSec: 0
+    - _VerticalAmount: 8
     - _ZWrite: 1
+    - _invWaveLength: 14.09
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

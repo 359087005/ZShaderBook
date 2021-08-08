@@ -12,7 +12,7 @@
     {
         //吧队列设置为透明 可以确保该物体渲染时 其他不透明物体已被渲染
         //渲染类型这是为了 在用着色器替换时 shader replacement 该物体可以在被需要时正确渲染
-        Tags { "RenderType"="Opaque" "RenderQueue = Transparent"}
+        Tags { "RenderType"="Opaque" "Queue" ="Transparent"}
 
         GrabPass{"_RefractionTex"}  //该字符串名称 决定了 抓取到的屏幕图会被存在那个纹理
         
@@ -25,7 +25,8 @@
             #pragma multi_compile_fog
 
             #include "UnityCG.cginc"
-            
+            #include "Lighting.cginc"
+
             sampler2D _MainTex;
             float4 _MainTex_ST;
             sampler2D _BumpMap;
@@ -43,15 +44,17 @@
                 float3 texcoord : TEXCOORD0;
                 float3 normal : NORMAL;
                 float4 tangent : TANGENT;
+				
             };
 
             struct v2f
             {
                 float4 pos : SV_POSITION;
-                float3 worldNormal : TEXCOORD0;
-                float3 worldPos : TEXCOORD1;
-                float3 worldTangent : TEXCOORD2;
-                float3 worldBionormal :TEXCOORD3;
+                float4 uv : TEXCOORD0;
+                float4 TtoW0 : TEXCOORD1;
+                float4 TtoW1 : TEXCOORD2;
+                float4 TtoW2 : TEXCOORD3;
+				float4 scrPos : TEXCOORD4;
             };
 
           v2f vert (a2v v)
@@ -59,46 +62,43 @@
                 v2f o;
                 o.pos = UnityObjectToClipPos(v.vertex);  //
                 //内置函数  获得被抓取屏幕图像的采样坐标
-                o.srcPos = ComputeGrabScreenPos(o.pos);
-
+                o.scrPos = ComputeGrabScreenPos(o.pos);
                 o.uv.xy = TRANSFORM_TEX(v.texcoord,_MainTex);
-                o.uv.zw = TRANSFORM_Tex(v.texcoord,_BumpMap);
-
-                float3 worldPos = mul(unity_ObjectToWorld,v.vertex).xyz;
-                fixed3 worldNormal = UnityObjectToWorldNormal(v.nromal);
-                fixed3 worldTangent = UnityObjectToWorldDir(v.tangent.xyz);
-                fixed3 worldBionormal = corss()
-
-              
+                o.uv.zw = TRANSFORM_TEX(v.texcoord,_BumpMap);
+              //在片元着色器中把法线方向从切向空间变换到世界空间下     计算顶点对应的从切线空间到世界空间的变换矩阵
              
+                float3 worldPos = mul(unity_ObjectToWorld,v.vertex).xyz;
+                fixed3 worldNormal = UnityObjectToWorldNormal(v.normal);
+                fixed3 worldTangent = UnityObjectToWorldDir(v.tangent.xyz);
+                fixed3 worldBinormal = cross(worldNormal,worldTangent) * v.tangent.w;
+             //xyz  顶点切线  副切线  法线      第四个值 利用起来 存储世界空间下的顶点坐标
+                o.TtoW0 = float4(worldTangent.x,worldBinormal.x,worldNormal.x,worldPos.x);
+                o.TtoW1 = float4(worldTangent.y,worldBinormal.y,worldNormal.y,worldPos.y);
+                o.TtoW2 = float4(worldTangent.z,worldBinormal.z,worldNormal.z,worldPos.z);
                 return o;
             }
 
             fixed4 frag (v2f i) : SV_Target
             {
-               fixed3 worldNormal = normalize(i.worldNormal);
-               fixed3 worldLightDir = normalize( UnityWorldSpaceLightDir(i.worldPos));
-               fixed3 worldviewDir = normalize(i.worldViewDir);
+                //通过ttow0 w 分量得到世界坐标
+                float3 worldPos = float3(i.TtoW0.w,i.TtoW1.w,i.TtoW2.w);
+                //通过该值获得对应的视角方向
+                fixed3 worldViewDir = normalize(UnityWorldSpaceViewDir(worldPos));
 
-               fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
-                 //autolight.cginc   计算光照衰减和阴影
-                //第二个参数是v2f的结构体  使用SHADOW_ATTENUATION 来计算阴影值
-                //第三个参数是世界空间坐标    计算光源空间下的坐标 在对照光照衰减纹理采样获得光照衰减
-                UNITY_LIGHT_ATTENUATION(atten,i,i.worldPos);
-                 //对立方体纹理采样需要使用CG函数 
-                fixed3 reflection = texCUBE(_CubeMap,i.worldRefl).rgb ;
-
-                //Schlick 菲涅耳近似等式：
-                //FSchlick(v, n) = F0 + (1 - F0)(1 - dot(v, n))5
-                //F0 就是反射系数 _FresnelScale  v是视角方向  n是表面法线
-                fixed fresnel = _FresnelScale + (1-_FresnelScale) * pow(1-dot(worldviewDir,worldNormal),5);
+                //对法线纹理采样得到 切线空间下的法线方向
+                fixed3 bump = UnpackNormal(tex2D(_BumpMap,i.uv.zw));
+                //使用bump值和_Distortion   _RefractionTex_TexelSize 对屏幕图像采样坐标进行偏移  模拟折射效果
                 
-                //"include lighting.cginc"
-                fixed3 diff = _LightColor0.rgb * _Color.rgb * saturate(dot(worldNormal,worldLightDir));
-               
-                fixed3 color = ambient + lerp(diff,reflection,saturate(fresnel)) * atten;
-
-                return fixed4(color,1.0);
+                float2 offset = bump.xy * _Distortion * _RefractionTex_TexelSize.xy;
+                i.scrPos.xy = offset + i.scrPos.xy;
+            	fixed3 refrCol =tex2D(_RefractionTex,i.scrPos.xy/i.scrPos.w).rgb;
+                
+                bump = normalize(half3(dot(i.TtoW0.xyz, bump), dot(i.TtoW1.xyz, bump), dot(i.TtoW2.xyz, bump)));
+				fixed3 reflDir = reflect(-worldViewDir, bump);
+				fixed4 texColor = tex2D(_MainTex, i.uv.xy);
+				fixed3 reflCol = texCUBE(_CubeMap, reflDir).rgb * texColor.rgb;
+				fixed3 finalColor = reflCol * (1 - _RefractAmount) + refrCol * _RefractAmount;
+				return fixed4(finalColor, 1);
             }
             ENDCG
         }
