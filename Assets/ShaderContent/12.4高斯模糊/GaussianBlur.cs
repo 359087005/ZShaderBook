@@ -17,15 +17,15 @@ public class GaussianBlur : PostEffectBase
         }
     }
     
+    //迭代次数
     [Range(0,4)]
-    public int iterations =3;
-
+    public int iterations =3;    
+    //模糊范围
     [Range(0.2f,3.0f)]
     public float blurSpread = 0.6f;
-
+    //缩放系数
     [Range(1,8)]
-    public int downSample = 2;
-
+    public int downSample = 2;  //越大 需要处理像素越少  图稿模糊程度 但会变成马赛克
 
     private void OnRenderImage(RenderTexture src, RenderTexture dest)
     {

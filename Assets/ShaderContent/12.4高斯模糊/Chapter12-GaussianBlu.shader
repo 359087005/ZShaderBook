@@ -33,7 +33,8 @@
                o.uv[4] = uv - float2(0.0,_MainTex_TexelSize.y * 2.0) * _BlurSize;
                 return o;
             }
-            v2f vertBlurHorizontal(appdata_img v) {
+            v2f vertBlurHorizontal(appdata_img v)
+            {
 			v2f o;
 			o.pos = UnityObjectToClipPos(v.vertex);
 			
@@ -46,7 +47,7 @@
 			o.uv[4] = uv - float2(_MainTex_TexelSize.x * 2.0, 0.0) * _BlurSize;
 					 
 			return o;
-		}
+			}
 
             fixed4 fragBlur (v2f i) : SV_Target
             {
