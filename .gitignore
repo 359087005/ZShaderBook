@@ -36,3 +36,8 @@ obj/
 Assembly-CSharp.csproj
 Assembly-CSharp-Editor.csproj
 UnityShader_Book.sln
+Assets/ShaderContent/ShaderTest/
+Assets/ShaderContent/ShaderTest.meta
+Assets/www.mat
+Assets/www.mat.meta
+UnityShader_Book.sln.DotSettings.user
