@@ -56,7 +56,7 @@ Shader "UNITY SHADER BOOK/Chapter_7/SingleTexture"
             o.worldPos = mul(unity_ObjectToWorld,v.vertex).xyz;
 
             o.uv = v.texcoord * _MainTex_ST.xy + _MainTex_ST.zw; //在顶点着色器中，使用纹理属性值对纹理进行坐标变换
-            //o.uv = TRANSFORM_TEX(V.texcoord,_Maintex);
+            //o.uv = TRANSFORM_TEX(v.texcoord,_Maintex);
             
             return o;
         }

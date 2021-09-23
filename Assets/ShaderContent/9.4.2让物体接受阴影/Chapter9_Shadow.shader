@@ -152,7 +152,6 @@ Shader "Chapter9/Shadow" {
 
 				return fixed4((diffuse + specular) * atten, 1.0);
 			}
-
 			ENDCG
 		}
 	}

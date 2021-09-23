@@ -65,8 +65,10 @@ Shader "UNITY SHADER BOOK/Chapter_7/RampTexture"
 			fixed3 ambient  = UNITY_LIGHTMODEL_AMBIENT.xyz;
 			//半兰伯特光照公式 0.5 *（N · L） +0.5   映射到0-1之间
 			fixed halfLambert = 0.5 * dot(worldNormal,worldLightDir) + 0.5;
+        	//fixed halfLambert =dot(worldNormal,worldLightDir);
 			//构建一个纹理坐标 并对渐变纹理进行采样(渐变纹理是一个一维纹理，因此UV方向都使用halfLambert)   渐变纹理颜色x材质颜色  获得最终漫反射颜色
 			fixed3 diffuseColor = tex2D(_RampTex,fixed2(halfLambert,halfLambert)).rgb * _Color.rgb;
+			//fixed3 diffuseColor = tex2D(_RampTex,i.uv).rgb * _Color.rgb;
 			//_LightColor0  前向渲染   光源颜色  内置函数
 			fixed3 diffuse = _LightColor0.rgb * diffuseColor;			
 			//UnityWorldSpaceViewDir   通过世界坐标系下的点   获得该点到摄像机的观察方向
@@ -76,7 +78,8 @@ Shader "UNITY SHADER BOOK/Chapter_7/RampTexture"
 			//blinn-phone光照公式
 			fixed3 specular = _LightColor0.rgb *_Specular.rgb * pow(saturate(dot(viewDir,halfDir)),_Gloss);
 			//颜色相加
-            return fixed4(ambient + diffuse ,1.0);
+        	//return fixed4(diffuseColor + specular + ambient ,1.0);
+            return fixed4(halfLambert,halfLambert,halfLambert ,1.0);
         }
         ENDCG
         }

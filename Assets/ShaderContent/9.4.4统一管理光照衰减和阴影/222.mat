@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 222
+  m_Shader: {fileID: 4800000, guid: 044d60da5f76e8d4983fe4703a3f7b4e, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs: []
+    m_Floats:
+    - _Gloss: 28.1
+    - _P_PointLightRange: 1
+    - _PointLightIntensity: 0.16
+    - _PointLightStrength: 1
+    - _fAttenuation0: 0.762
+    - _fAttenuation1: 0.877
+    - _fAttenuation2: 0.654
+    m_Colors:
+    - _Diffuse: {r: 1, g: 1, b: 1, a: 1}
+    - _PointLightPos: {r: 0, g: 1, b: 0, a: 0}
+    - _Specular: {r: 1, g: 1, b: 1, a: 1}
+    - _pointLightColor: {r: 1, g: 0, b: 0, a: 1}

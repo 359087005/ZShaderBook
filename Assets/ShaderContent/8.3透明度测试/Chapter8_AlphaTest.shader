@@ -67,16 +67,19 @@ Shader "UNITY SHADER BOOK/Chapter_8/AlphaTest"
             fixed3 worldLightDir = normalize(UnityWorldSpaceLightDir(i.worldPos));
 
             fixed4 texColor = tex2D(_MainTex, i.uv);
-
-            //alpha test
+            
+             //alpha test
             clip(texColor.a - _Cutoff);
-
+            //
+            //if((texColor.a - _Cutoff)<0)
+            //  discard;
         	
 			fixed3 albedo = texColor.rgb * _Color.rgb; 
 
             fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz * albedo; //获取环境光
             //light颜色* Diffuse 颜色 *saturate(N · L)； 
             fixed3 diffuse = _LightColor0.rgb * albedo * saturate(dot(worldNormal, worldLightDir)); //漫反射公式
+
 
         	return fixed4(ambient + diffuse, 1.0f);
         }

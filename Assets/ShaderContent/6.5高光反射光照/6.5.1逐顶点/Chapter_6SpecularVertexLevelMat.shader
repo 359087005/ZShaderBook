@@ -45,7 +45,7 @@ Shader "UNITY SHADER BOOK/Chapter_6/Specular Vertex Level"
             v2f o;
             o.pos = UnityObjectToClipPos(v.vertex);//顶点坐标转到裁剪空间
             //unity内置变量 环境光
-            fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;//获取环境光照
+            //fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;//获取环境光照
 
             fixed3 worldNormal = normalize(mul(v.normal,(float3x3)unity_WorldToObject)); //法线转到世界
             //_WorldSpaceLightPos0 单个光源且是平行光获得光源方向 
@@ -60,7 +60,7 @@ Shader "UNITY SHADER BOOK/Chapter_6/Specular Vertex Level"
             fixed3 specular = _LightColor0.rgb * _Specular.rgb * pow( saturate(dot(viewDir,reflectDir)),_Gloss);
             //相乘 光乘物体本身的属性 比如环境光乘以物体的albedo  就是我们看到的物体反射的环境光
             //相加 当物体被多个光源照射时   把物体反射这些光源颜色相加 就是最终颜色
-            o.color = ambient+ diffuse +  specular;
+            o.color =  diffuse +  specular;
 
             return o;
         }

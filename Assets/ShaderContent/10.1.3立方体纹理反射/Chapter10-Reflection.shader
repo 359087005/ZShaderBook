@@ -16,18 +16,15 @@
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            
             #include "UnityCG.cginc"
             #include "AutoLight.cginc"
             #include "Lighting.cginc"
-            
             struct a2v
             {
                 float4 vertex : POSITION;
                 float3 texcoord : TEXCOORD0;
                 float3 normal : NORMAL;
             };
-
             struct v2f
             {
                 float4 pos : SV_POSITION;
@@ -45,7 +42,6 @@
             v2f vert (a2v v)
             {
                 v2f o;
-
                 o.pos = UnityObjectToClipPos(v.vertex);
                 o.worldNormal = UnityObjectToWorldNormal(v.normal);
                 o.worldPos = mul(unity_ObjectToWorld,v.vertex).xyz;

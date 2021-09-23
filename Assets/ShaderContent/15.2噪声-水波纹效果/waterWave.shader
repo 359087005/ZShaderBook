@@ -85,7 +85,7 @@
                fixed3 worldPos = float3(i.TtoW0.w,i.TtoW1.w,i.TtoW2.w);  //w存储的是世界坐标
 
                 fixed3 viewDir = normalize(UnityWorldSpaceViewDir(worldPos));
-                float2 speed=  _Time.y * float2(_WaveXSpeed,_WaveYSpeed);  //计算当前纹理便宜量
+                float2 speed=  _Time.y * float2(_WaveXSpeed,_WaveYSpeed);  //计算当前纹理偏移量
 
                 //get the normal in tangent space
                 //对法线采样并将法线还原到-1 1 取值之间

@@ -73,7 +73,7 @@ Shader "UNITY SHADER BOOK/Chapter_7/NormalMapInTangentSpace"
             TANGENT_SPACE_ROTATION;
             
             o.lightDir = mul(rotation,ObjSpaceLightDir(v.vertex)).xyz;//rotation 表示从世界空间到切线空间的矩阵
-
+            
             o.viewDir = mul(rotation,ObjSpaceViewDir(v.vertex)).xyz;//rotation 表示从世界空间到切线空间的矩阵
             
             return o;
